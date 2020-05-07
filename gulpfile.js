@@ -64,7 +64,9 @@ gulp.task('auto-format', (done) => {
   return gulp.src(targetSource, { nocase: true })
     .pipe(cdnify({
       rewriter: function(path, process) {
-        if (!path.startsWith('//')) {
+        if(!path) {
+          return path;
+        } else if (!path.startsWith('//')) {
           return path;
         } else if (/(png|jpg|gif|jpeg|svg)$/i.test(path)) {
           path += (path.split('?')[1] ? '&':'?') + 'auto=format'
