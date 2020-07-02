@@ -12,6 +12,18 @@ services:
     environment:
       - URL_PREFIX=//exmple.com/
 
+
+  since:
+    build: .
+    volumes:
+      - /home/admin/Projects/tringle/docker-cdnify/since:/data
+      - /etc/group:/etc/group:ro
+      - /etc/passwd:/etc/passwd:ro
+    command: gulp since
+    user: "${LOCAL_UID}:${LOCAL_GID}"
+    environment:
+      - URL_PREFIX=//exmple.com/
+
   rev:
     build: .
     volumes:

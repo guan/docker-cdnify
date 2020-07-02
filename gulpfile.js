@@ -1,10 +1,13 @@
 const gulp = require('gulp');
+const debug = require('gulp-debug');
+const moment = require('moment');
 
 const rev = require('gulp-rev');
 const revFormat = require('gulp-rev-format');
 
 const fingerprint = require('gulp-fingerprint');
 const htmlPath = require('./html-path');
+const { task } = require('gulp');
 
 const basePath = "/data"
 const destPath = "/data"
@@ -14,6 +17,12 @@ const urlPrefix = process.env.URL_PREFIX
 const targetImage = [`${basePath}/**/*.jpg`, `${basePath}/**/*.gif`, `${basePath}/**/*.png`, `${basePath}/**/*.jpeg`, `${basePath}/**/*.svg`, `!${basePath}/**/*.cache.*`]
 const targetSource = [`${basePath}/**/*.html`, `${basePath}/**/*.css`, `${basePath}/**/*.php`, `!${basePath}/**/*jquery*`, `!${basePath}/**/*.js`,]
 
+const lastYear = moment().subtract(1, 'year').toDate()
+
+gulp.task('since', (done) => {
+  return gulp.src(targetImage, { nocase: true, since: lastYear })
+    .pipe(debug())
+})
 
 gulp.task('test', (done) => {
   console.log("hello, world");
@@ -21,9 +30,11 @@ gulp.task('test', (done) => {
   done()
 })
 
+
 gulp.task('rev', () => {
-  return gulp.src(targetImage, { nocase: true })
+  return gulp.src(targetImage, { nocase: true, since: lastYear })
     .pipe(rev())
+    .pipe(debug())
     .pipe(revFormat({
       suffix: '.cache'
     }))
