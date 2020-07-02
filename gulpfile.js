@@ -5,6 +5,8 @@ const moment = require('moment');
 const rev = require('gulp-rev');
 const revFormat = require('gulp-rev-format');
 
+const plumber = require('gulp-plumber');　 
+
 const fingerprint = require('gulp-fingerprint');
 const htmlPath = require('./html-path');
 const { task } = require('gulp');
@@ -21,6 +23,10 @@ const lastYear = moment().subtract(1, 'year').toDate()
 
 gulp.task('since', (done) => {
   return gulp.src(targetImage, { nocase: true, since: lastYear })
+    .pipe(plumber())
+    .on('error', function(err) {
+      console.log(err.message);
+    })
     .pipe(debug())
 })
 

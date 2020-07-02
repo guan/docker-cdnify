@@ -10,6 +10,7 @@
   "scripts": {},
   "dependencies": {
     "gulp-debug": "^4.0.0",
+    "gulp-plumber": "^1.2.1",
     "moment": "^2.27.0"
   },
   "devDependencies": {
